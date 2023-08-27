@@ -23,6 +23,15 @@ const imageFilenames = [
 
 const profileImg = document.getElementById("profile-img");
 const newImageLink = document.getElementById("new-image-link");
+const preloadedImagesContainer = document.getElementById("preloaded-images");
+
+function preloadImages() {
+    imageFilenames.forEach(filename => {
+        const img = new Image();
+        img.src = "profile-images/" + filename;
+        preloadedImagesContainer.appendChild(img);
+    });
+}
 
 function getRandomImageFilename() {
     if (imageFilenames.length === 0) {
@@ -36,6 +45,8 @@ function changeProfileImage() {
     const newImageFilename = getRandomImageFilename();
     profileImg.src = "profile-images/" + newImageFilename;
 }
+
+preloadImages(); // Preload images on page load
 
 newImageLink.addEventListener("click", function (event) {
     event.preventDefault();
