@@ -1,16 +1,35 @@
 body {
-  font-family: sans-serif;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
 }
 
-h1 {
-  font-size: 2em;
-  margin-top: 0;
+header {
+    text-align: center;
+    background-color: #f0f0f0;
+    padding: 20px;
 }
 
-h2 {
-  font-size: 1.5em;
+header img {
+    width: 100px; /* Adjust the image size as needed */
+    border-radius: 50%; /* To make the image circular */
 }
 
-p {
-  margin-bottom: 1em;
+header h1 {
+    margin: 10px 0;
+}
+
+main {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
 }
