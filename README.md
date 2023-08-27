@@ -1,7 +1,9 @@
 # raayandhar.github.io
 Personal website
 Todo:
-- Add random escher images
+- ~Add random escher images~ DONE
+- Give credit to inspiration behind your website
+- Fun section (Springer GTM test, Chess, etc)
 - Add contact info section/route
 - Add more routes (projects, writing, etc)
 - Add a blog/writing section
