@@ -3,26 +3,21 @@ body {
     margin: 0;
     padding: 0;
     text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
     background-color: #f0f0f0;
-}
-
-.centered-content {
-    max-width: 800px;
-    width: 100%;
-    padding: 20px;
-    box-sizing: border-box;
-    text-align: left;
+    padding-top: 100px; /* Adjust the value to control the space at the top */
 }
 
 header {
     display: flex;
     align-items: center;
+    justify-content: center;
+    background-color: #f0f0f0;
     padding: 20px;
-    border-bottom: 1px solid #ddd;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
 }
 
 header img {
