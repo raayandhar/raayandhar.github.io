@@ -1,5 +1,5 @@
 // List of image URLs
-const imageUrls = [
+const imageFilenames = [
     "image1.jpg",
     "image2.jpg",
     "image3.jpg",
@@ -24,17 +24,17 @@ const imageUrls = [
 const profileImg = document.getElementById("profile-img");
 const newImageLink = document.getElementById("new-image-link");
 
-function getRandomImageUrl() {
-    if (imageUrls.length === 0) {
+function getRandomImageFilename() {
+    if (imageFilenames.length === 0) {
         return "default.jpg"; // Use default image if no other images available
     }
-    const randomIndex = Math.floor(Math.random() * imageUrls.length);
-    return imageUrls[randomIndex];
+    const randomIndex = Math.floor(Math.random() * imageFilenames.length);
+    return imageFilenames[randomIndex];
 }
 
 function changeProfileImage() {
-    const newImageUrl = getRandomImageUrl();
-    profileImg.src = newImageUrl;
+    const newImageFilename = getRandomImageFilename();
+    profileImg.src = "profile-images/" + newImageFilename;
 }
 
 newImageLink.addEventListener("click", function (event) {
