@@ -22,7 +22,7 @@ header {
 }
 
 header img {
-    width: 100px;
+    width: 200px;
     border-radius: 50%;
     margin-right: 20px;
 }
@@ -53,6 +53,6 @@ a:hover {
 
 .mini-header {
     font-size: 2em; /* Adjust the size as needed */
-    color: #FF5733; /* Choose your desired hex color code */
+    color: #1F1EE2; /* Choose your desired hex color code */
     margin-bottom: 10px;
 }
