@@ -13,6 +13,11 @@ header {
     justify-content: center;
     background-color: #f0f0f0;
     padding: 20px;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
 }
 
 header img {
@@ -33,7 +38,11 @@ main {
     max-width: 800px;
     margin: 0 auto;
     padding: 20px;
-    text-align: left;
+    text-align: center;
+}
+
+.main-text {
+    text-align: center;
 }
 
 a {
