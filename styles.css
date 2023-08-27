@@ -4,7 +4,7 @@ body {
     padding: 0;
     text-align: center;
     background-color: #f0f0f0;
-    padding-top: 50px; /* Adjust the value to control the space at the top */
+    padding-top: 20px; /* Adjust the value to control the space at the top */
 }
 
 header {
@@ -35,10 +35,10 @@ header h1 {
 }
 
 main {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    text-align: center;
+  max-width: 800px;
+  margin: 0 auto; 
+  padding: 20px;
+  text-align: center;
 }
 
 .main-text {
