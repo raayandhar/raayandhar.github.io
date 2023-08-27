@@ -21,15 +21,23 @@ const imageUrls = [
     "image19.jpg"
 ];
 
-
-// Get the profile image element
 const profileImg = document.getElementById("profile-img");
+const newImageLink = document.getElementById("new-image-link");
 
-// Function to get a random image URL
 function getRandomImageUrl() {
+    if (imageUrls.length === 0) {
+        return "default.jpg"; // Use default image if no other images available
+    }
     const randomIndex = Math.floor(Math.random() * imageUrls.length);
     return imageUrls[randomIndex];
 }
 
-// Set a random image on page load
-profileImg.src = getRandomImageUrl();
+function changeProfileImage() {
+    const newImageUrl = getRandomImageUrl();
+    profileImg.src = newImageUrl;
+}
+
+newImageLink.addEventListener("click", function (event) {
+    event.preventDefault();
+    changeProfileImage();
+});
