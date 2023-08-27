@@ -42,6 +42,13 @@ main {
     text-align: left;
 }
 
+.mini-header {
+    font-size: 2em; /* Adjust the size as needed */
+    color: #FF5733; /* Choose your desired hex color code */
+    margin-bottom: 10px;
+}
+
+
 a {
     color: #007bff;
     text-decoration: none;
