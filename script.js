@@ -29,9 +29,18 @@ function preloadImages() {
     imageFilenames.forEach(filename => {
         const img = new Image();
         img.src = "profile-images/" + filename;
+        img.setAttribute("loading", "lazy"); // Enable lazy loading
         preloadedImagesContainer.appendChild(img);
     });
 }
+
+// Add this code to set caching headers
+imageFilenames.forEach(filename => {
+    const img = new Image();
+    img.src = "profile-images/" + filename;
+    img.setAttribute("loading", "lazy"); // Enable lazy loading
+    img.crossOrigin = "anonymous"; // Enable caching
+});
 
 function getRandomImageFilename() {
     if (imageFilenames.length === 0) {
