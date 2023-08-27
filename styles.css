@@ -23,15 +23,18 @@ body {
     justify-content: center;
     align-items: center;
     width: 100%;
-    max-width: 500px;
+    max-width: 540px;
+    margin: 0 auto;
 }
 
-header {
+.header {
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: #f0f0f0;
     padding: 20px;
+    width: 100%; /* Set the header width to 100% */
+    box-sizing: border-box;
 }
 
 header img {
@@ -42,18 +45,29 @@ header img {
 
 .header-content {
     text-align: left;
+    margin-top: 10px; /* Adjust the margin-top as needed */
 }
 
+.header-content h1 {
+    margin-bottom: 1px; /* Adjust the margin-bottom as needed */
+}
+
+.header-content p {
+    margin-top: 1px; /* Adjust the margin-top as needed */
+}
+
+
 header h1 {
-    margin: 10px 0;
+    margin: 5px 0; /* Adjust the margin as needed */
 }
 
 main {
     max-width: 800px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 0.5px;
     text-align: left;
 }
+
 
 a {
     color: #007bff;
@@ -65,7 +79,8 @@ a:hover {
 }
 
 .mini-header {
-    font-size: 1.5em; /* Adjust the size as needed */
+    font-size: 1.3em; /* Adjust the size as needed */
     color: #a81010; /* Choose your desired hex color code */
+    margin-top: 0px;
     margin-bottom: 10px;
 }
