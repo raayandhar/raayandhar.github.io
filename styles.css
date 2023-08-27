@@ -22,7 +22,7 @@ header {
 }
 
 header img {
-    width: 200px;
+    width: 100px;
     border-radius: 50%;
     margin-right: 20px;
 }
@@ -36,7 +36,7 @@ header h1 {
 }
 
 main {
-    max-width: 400px;
+    max-width: 800px;
     margin: 0 auto;
     padding: 20px;
     text-align: left;
@@ -53,6 +53,6 @@ a:hover {
 
 .mini-header {
     font-size: 2em; /* Adjust the size as needed */
-    color: #1F1EE2; /* Choose your desired hex color code */
+    color: #FF5733; /* Choose your desired hex color code */
     margin-bottom: 10px;
 }
