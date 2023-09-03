@@ -2,6 +2,7 @@
 Personal website
 Todo:
 - ~Add random escher images~ DONE
+- ~Add favicon~ DONE
 - Give credit to inspiration behind your website
 - Fun section (Springer GTM test, Chess, etc)
 - Add contact info section/route
