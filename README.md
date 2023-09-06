@@ -4,6 +4,7 @@ Todo:
 - ~Add random escher images~ DONE
 - ~Add favicon~ DONE
 - Add all the books and articles you've enjoyed
+  - Fix header and lack of space at reading.html
   - Link reading.html to the main page
   - Add custom favicon to reading page
   - Make a new page with the full list of everything you've read (as a tracker, with year-by-year setup)
