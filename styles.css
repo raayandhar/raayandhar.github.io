@@ -27,13 +27,19 @@ body {
     margin: 0 auto;
 }
 
+/* Center the back link and add margin from the top */
+.back-link {
+    text-align: center;
+    margin-top: 20px;
+}
+
 .header {
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: #f0f0f0;
     padding: 20px;
-    width: 100%; /* Set the header width to 100% */
+    width: 100%;
     box-sizing: border-box;
 }
 
