@@ -16,3 +16,4 @@ Todo:
 - Add more routes (projects, writing, etc)
 - Add a blog/writing section
 - See bookmarks and thought holding cell for more
+- Add an obfuscated email
