@@ -10,7 +10,7 @@ Todo:
   - Make a new page with the full list of everything you've read (as a tracker, with year-by-year setup)
     - Setup curius for all articles read, leave books, etc seperate
 - Make it so that no image repeats back-to-back when generating randomly
-- Give credit to inspiration behind your website
+- Give credit to inspiration behind your website (Sara Venkatraman, Dexter Chua, etc)
 - Fun section (Springer GTM test, Chess, etc)
 - Add contact info section/route
 - Add more routes (projects, writing, etc)
