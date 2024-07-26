@@ -22,14 +22,15 @@
     A = S - \frac{2}{u^TSu} uu^T
     $$
 is pseudo-orthogonal, we have the following:
-    $$ \begin{aligned}
-    A^TSA &= \left(S - \frac{2}{u^TSu}uu^T \right)^T S (S - \frac{2}{u^TSu}uu^T} \\
-    &= \left(S^T - \frac{2}{u^TSu}uu^T \right) S \left(S - \frac{2}{u^TSu}uu^T \right) \ \{text(distributing transpose)} \\
-    &= \left(I - \frac{2}{u^TSu} uu^TS\right)\left(S - \frac{2}{u^TSu}uu^T\right) \ \{text(note: \(SS = I\))} \\
-    &= S - \frac{2}{u^TSu} uu^T - \frac{2}{u^T S u} S uu^T S + \frac{4}{(u^TSu)^2} u(u^TSu)u^T \ \text{(distributing)} \\
-    &= S - \frac{4}{u^TSu} uu^T + \frac{4}{u^TSu} uu^T \text{(since \(S\) is diagonal, can be moved anywhere as an operation)} \\
-    &= S
-    \end{aligned}
+    $$ 
+    \begin{aligned}
+A^TSA &= \left(S - \frac{2}{u^TSu}uu^T \right)^T S \left(S - \frac{2}{u^TSu}uu^T\right) \\
+&= \left(S^T - \frac{2}{u^TSu}uu^T \right) S \left(S - \frac{2}{u^TSu}uu^T \right) \ \text{(distributing transpose)} \\
+&= \left(I - \frac{2}{u^TSu} uu^TS\right)\left(S - \frac{2}{u^TSu}uu^T\right) \ \text{(note: \(SS = I\))} \\
+&= S - \frac{2}{u^TSu} uu^T - \frac{2}{u^T S u} S uu^T S + \frac{4}{(u^TSu)^2} u(u^TSu)u^T \ \text{(distributing)} \\
+&= S - \frac{4}{u^TSu} uu^T + \frac{4}{u^TSu} uu^T \text{(since \(S\) is diagonal, can be moved anywhere as an operation)} \\
+&= S
+\end{aligned}
     $$
     as desired.
     </p>
