@@ -10,7 +10,8 @@
 </head>
 <body>
     <h2>Pseudo-Orthogonal Matrices</h2>
-    <p> 
+    <p> TODO: Add more interesting things about Pseudo-Orthogonal matrices, i.e., <a href="https://nhigham.com/2021/04/28/what-is-a-pseudo-orthogonal-matrix/">Nick Higham's</a> blog post, etc.
+    <p>
       Prof. Vandenberghe has a great set of <a href="https://www.seas.ucla.edu/~vandenbe/133A/133A-exercises.pdf">additional exercies</a> where I ran across the idea of an <i>pseudo-orthogonal</i> matrix, defined as follows. He first defines a <i>signature matrix</i>, a square matrix with diagonal elements are either \(+1\) or \(-1\). Then if \(S\) is a signature matrix, and \(A\) is a square matrix that satisfies:
       $$
       A^TSA = S
@@ -33,6 +34,41 @@ A^TSA &= \left(S - \frac{2}{u^TSu}uu^T \right)^T S \left(S - \frac{2}{u^TSu}uu^T
 \end{aligned}
     $$
     as desired.
+    <h3>(b)</h3>
+    To show that $A$ is invertible, first note that since \(S\) is a diagonal matrix, then it has an inverse: itself (\SS = I\). Then, we have the following:
+    $$
+    \begin{aligned}
+    S &= A^TSA \\
+    SS &= SA^TSA \\
+    I &= SS A^TA \\
+    I &= A^TA
+    \end{aligned}
+    $$
+    so \(A\) has an inverse: \(A^T\).
+    <h3>(c)</h3>
+    If \(A\) is psuedo-orthogonal, then we can then have the following setup:
+    $$\begin{aligned}
+    Ax &= b \\
+    A^TSAx &= A^TSb \\
+    Sx &= A^TSb \\
+    SSx &= SA^TSb \\
+    x &= SSA^Tb \\
+    x &= A^Tb
+    \end{aligned}
+    $$
+    the matrix-vector multiplication \(A^Tb\) costs \(O(n^2)\) FLOPs, and that is the only multiplication we need to do.
+    <h3>(d)</h3>
+    If \(A\) is is pseudo-orthogonal, then we have the following:
+    $$\begin{aligned}
+    A^TSA &= S \\
+    ASA^TSA = A \ \text{(\(SS = I\))} \\
+    ASA^TSAA^{-1} = AA^{-1} \\
+    ASA^TS = I \\
+    ASA^TSS = S \\
+    ASA^T = S
+    \end{aligned}
+    as desired.
+    $$
     </p>
     <!-- MathJax Script -->
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
