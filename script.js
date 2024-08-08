@@ -1,6 +1,5 @@
 // List of image URLs
 const imageFilenames = [
-    "image1.jpg",
     "image2.jpg",
     "image3.jpg",
     "image4.jpg",
