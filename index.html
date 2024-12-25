@@ -3,79 +3,142 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <!-- <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/dreampulse/computer-modern-web-font/master/fonts.css"> -->
-    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Lora&display=swap">
-    <link rel="icon" href="favicon.ico?" type="image/x-icon">
     <title>Raayan Dhar</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .profile-picture {
+            width: 120px;
+            height: 120px;
+            margin: 20px 50px; /* Consistent spacing for profile picture */
+        }
+
+        .container {
+            display: flex;
+            margin: 0 50px; /* Keep the navbar and content in balance */
+            max-width: 900px;
+            background-color: transparent;
+            padding: 0;
+        }
+
+        .sidebar {
+            width: 180px;
+            padding-right: 10px; /* Reduced space between sidebar and content */
+            margin-left: 10px;
+            margin-top: -10px; /* Navbar moved slightly higher */
+        }
+
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .sidebar ul li {
+            margin-bottom: 8px;
+        }
+
+        .sidebar ul li a {
+            text-decoration: none;
+            color: #0073e6;
+            font-size: 14px;
+        }
+
+        .content {
+            padding-left: 10px; /* Reduced space between content and sidebar */
+            flex: 1;
+            margin-top: -90px; /* Move content higher */
+        }
+
+        .content h1 {
+            font-size: 26px;
+            margin-bottom: 10px;
+        }
+
+        .content h2 {
+            font-size: 20px;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        .content ul {
+            padding-left: 20px;
+            list-style-type: disc;
+        }
+
+        .content ul li {
+            margin-bottom: 5px;
+        }
+
+        a {
+            color: #0073e6;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .sidebar {
+                width: 100%;
+                padding-right: 0;
+                margin-bottom: 20px;
+            }
+
+            .content {
+                padding-left: 0;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class="outer-container">
-        <div class="container">
-            <header class="header">
-                <div class="profile-image">
-                    <img id="profile-img" src="profile-images/default.jpg" alt="Profile Image" loading="lazy">
-                </div>
-                <div class="header-content">
-                    <h1>Raayan Dhar</h1>
-                    <p><a href="#" id="new-image-link">Generate new image</a></p>
-                </div>
-            </header>
-            <main>
-                <h2 class="mini-header">About Me</h2>
-                <p>
-                    I am an undergraduate studying Computer Science with a concentration in Electrical Engineering at the <b>University of California, Los Angeles</b>.
-                </p>
-                <p>
-                  Currently, I do research on <a href="https://yuchencui.cc/">robotics</a>. Last summer I was a software development intern at Amazon. Even before that, I worked on privacy-preserving machine learning as a <a href="https://www.non-trivial.org/home-video">Non-trivial fellow</a> and
-                    modeled Monte-Carlo simulations for drug discovery functional screening at the <a href="https://faculty.sites.uci.edu/paegel/">Paegal Lab</a>.
-
-                </p>
-                <h2 class="mini-header">Contact Me</h2>
-                <p>See what I'm up to on <a href="https://twitter.com/raayandhar">Twitter</a>. Check out my projects <a href="https://github.com/raayandhar">here</a>.</p>
-                <p>You can access my email <a href="https://raayandhar.github.io/email.html">here</a>.</p>
-                <h2 class="mini-header">Coursework</h2>
-                <p><b>Winter 2025:</b></p>
-                <p>ECE236B: Convex Optimization<i>*</i></p>
-                <p>ECE239AS: Computational Imaging<i>*</i></p>
-                <p>CSM151B: Computer Architecture</p>
-                <p>CS131: Programming Languages</p>
-                <p><b>Fall 2024:</b></p>
-                <p>ECE236A: Linear Programming<i>*</i> </p>
-                <p>ECE231A: Information Theory<i>*</i> </p>
-                <p>CS180: Introduction to Algorithms and Complexity</p>
-                <p>CS35L: Software Construction</p>
-                <p>CS33: Introduction to Computer Organization</p>
-                <p><b>Spring 2024:</b></p>
-                <p>ECE231E: Channel Coding Theory<i>*</i> </p>
-                <p>ECE239AS: Advanced Neural Networks and Deep Learning<i>*</i></p>
-                <p>PHIL128: Philosophy of Computation</p>
-                <p>PHIL133C: Philosophy of Statistics</p>
-                <p><b>Winter 2024:</b></p>
-                <p>ECEC147: Neural Networks and Deep Learning</p>
-                <p>CSM146: Machine Learning</p>
-                <p>ECE131A: Probability and Statistics</p>
-                <p><a href="https://visual.ee.ucla.edu/EE149/"><p>ECE149: Foundations of Computer Vision</a></p>
-                <p>PHIL31: Logic</p>
-                <p><b>Fall 2023:</b></p>
-                <p><a href="https://www.seas.ucla.edu/~vandenbe/ee133a.html">ECE133A: Applied Numerical Computing</a></p>
-                <p>MATH33B: Differential Equations</p>
-                <p>MATH61: Discrete Structures</p>
-                <p>CS32: Introduction to Computer Science II</p>
-                <p>CSM51A: Digital Logic Design</p>
-                <i>* indicates graduate level course</i><br>
-                <p>Website inspired by Dexter Chua</p>
-                <!-- Need to add an obfuscated email. See README.md-->
-                <!--
-                <h2 class="mini-header">Test</h2>
-                <p>This is a testing <a href="https://raayandhar.github.io/reading.html">link</a>.</p>
-                -->
-                <h2 class="mini-header">Notes</h2>
-                <p><a href="notes/pseudo_orthogonal.html">Pseudo-Orthonogal Matrices</a></p>
-            </main>
+    <img src="pfp.jpg" alt="Profile Picture" class="profile-picture">
+    <div class="container">
+        <div class="sidebar">
+            <nav>
+                <ul>
+                    <li><strong>Navigation:</strong></li>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Interests</a></li>
+                    <li><a href="#">Coursework</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+                <ul>
+                    <li><strong>Quick links:</strong></li>
+                    <li><a href="https://github.com/raayandhar">Github</a></li>
+                    <li><a href="https://x.com/raayandhar">Twitter (X)</a></li>
+                    <li><a href="https://www.linkedin.com/in/raayan-dhar-4909051b1/">Linkedin</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="content">
+            <h1>Raayan Dhar</h1>
+            <p> I am an undergraduate studying Computer Science with a concentration in Electrical Engineering at the University of California, Los Angeles. Currently, I do research on robotics. Last summer I was a software development intern at Amazon. Even before that, I worked on privacy-preserving machine learning as a Non-trivial fellow and modeled Monte-Carlo simulations for drug discovery functional screening at the Paegal Lab. </p>
+            <h2>Interests</h2>
+            <p>I am interested in developing novel solutions to pressing problems, particularly via the development of new technologies (both computational and social). Some areas I am particularly interested in include:</p>
+            <ul>
+                <li>Prevention and treatment of infectious disease</li>
+                <li>Better methods to understand molecular mechanisms of cells</li>
+                <li>Digital tools to enhance civic participation in democracies</li>
+                <li>Strategies to mitigate climate change</li>
+                <li>Designing healthier social networks</li>
+            </ul>
+            <p>While at MIT, I worked with <a href="#">Mohsen Ghaffari</a> (MIT CSAIL), <a href="#">Yury Polyanskiy</a> (MIT LIDS), and <a href="#">Xiao Wang</a> (Broad Institute). Over Summer 2024, I worked with <a href="#">0xPARC</a>, an applied cryptography research organization.</p>
         </div>
     </div>
-    <div id="preloaded-images" style="display: none;"></div>
-    <script src="script.js"></script>
 </body>
 </html>
