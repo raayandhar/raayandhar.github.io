@@ -1,144 +1,64 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
-    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-site-verification" content="V8HrLbWbjt8cDieQAiaQ76BOBsDdpjpa3GyIiIzyO_4"/>
     <title>Raayan Dhar</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #ffffff;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-        }
-
-        .profile-picture {
-            width: 120px;
-            height: 120px;
-            margin: 20px 50px; /* Consistent spacing for profile picture */
-        }
-
-        .container {
-            display: flex;
-            margin: 0 50px; /* Keep the navbar and content in balance */
-            max-width: 900px;
-            background-color: transparent;
-            padding: 0;
-        }
-
-        .sidebar {
-            width: 180px;
-            padding-right: 10px; /* Reduced space between sidebar and content */
-            margin-left: 10px;
-            margin-top: -10px; /* Navbar moved slightly higher */
-        }
-
-        .sidebar ul {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        .sidebar ul li {
-            margin-bottom: 8px;
-        }
-
-        .sidebar ul li a {
-            text-decoration: none;
-            color: #0073e6;
-            font-size: 14px;
-        }
-
-        .content {
-            padding-left: 10px; /* Reduced space between content and sidebar */
-            flex: 1;
-            margin-top: -90px; /* Move content higher */
-        }
-
-        .content h1 {
-            font-size: 26px;
-            margin-bottom: 10px;
-        }
-
-        .content h2 {
-            font-size: 20px;
-            margin-top: 20px;
-            margin-bottom: 10px;
-        }
-
-        .content ul {
-            padding-left: 20px;
-            list-style-type: disc;
-        }
-
-        .content ul li {
-            margin-bottom: 5px;
-        }
-
-        a {
-            color: #0073e6;
-            text-decoration: none;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .sidebar {
-                width: 100%;
-                padding-right: 0;
-                margin-bottom: 20px;
-            }
-
-            .content {
-                padding-left: 0;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <img src="pfp.jpg" alt="Profile Picture" class="profile-picture">
-    <div class="container">
-        <div class="sidebar">
-            <nav>
-                <ul>
-                    <li><strong>Navigation:</strong></li>
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">Interests</a></li>
-                    <li><a href="#">Coursework</a></li>
-                    <li><a href="#">Blog</a></li>
-                    <li><a href="#">Contact</a></li>
-                </ul>
-                <ul>
-                    <li><strong>Quick links:</strong></li>
-                    <li><a href="https://github.com/raayandhar">Github</a></li>
-                    <li><a href="https://x.com/raayandhar">Twitter (X)</a></li>
-                    <li><a href="https://www.linkedin.com/in/raayan-dhar-4909051b1/">Linkedin</a></li>
-                </ul>
-            </nav>
-        </div>
-        <div class="content">
-            <h1>Raayan Dhar</h1>
-            <p> I am an undergraduate studying Computer Science with a concentration in Electrical Engineering at the University of California, Los Angeles. Currently, I do research on robotics. Last summer I was a software development intern at Amazon. Even before that, I worked on privacy-preserving machine learning as a Non-trivial fellow and modeled Monte-Carlo simulations for drug discovery functional screening at the Paegal Lab. </p>
-            <h2>Interests</h2>
-            <p>I am interested in developing novel solutions to pressing problems, particularly via the development of new technologies (both computational and social). Some areas I am particularly interested in include:</p>
+    <div class="navbar">
+        <img src="pfp.jpg" alt="Profile Picture" class="profile-picture">
+        <p class="navhead">Navigation:</p>
+        <a class="navlink" href="#home">Home</a>
+        <a class="navlink" href="#interests">Interests</a>
+        <a class="navlink" href="#ucla">UCLA</a>
+        <a class="navlink" href="#writing">Writing</a>
+        <a class="navlink" href="#contact">Contact</a>
+        <a class="navlink" href="#credit">Credit</a>
+        <p class="navhead">Quick Links:</p>
+        <a class="navlink" href="https://github.com/raayandhar" target="_blank">GitHub</a>
+        <a class="navlink" href="https://x.com/raayandhar" target="_blank">Twitter (X)</a>
+        <a class="navlink" href="https://www.linkedin.com/in/raayan-dhar-4909051b1/" target="_blank">LinkedIn</a>
+    </div>
+    <div class="main">
+        <h1 id="home">Raayan Dhar</h1>
+        <p>
+            I am an undergraduate studying Computer Science with a concentration in Electrical Engineering at the <strong>University of California, Los Angeles</strong>. Currently, I do research on robotics. Last summer I was a software development intern at Amazon. Far before that, my interest in computer science stemmed from being given the chance to work on Monte-Carlo simulations at the <a href="https://faculty.sites.uci.edu/paegel/", target="_blank">Paegal Lab</a>.
+        </p>
+        <h3 id="interests">Interests</h3>
+        <p>
+          These days, I am very interested in <a href="https://en.wikipedia.org/wiki/Robot_learning", target="_blank">robot learning</a>, namely <a href="https://www.youtube.com/watch?v=tbLaFtYpWWU", target="_blank">imitation learning</a>. However, my interests are in machine learning broadly, and any of the following is especially exciting to me
             <ul>
-                <li>Prevention and treatment of infectious disease</li>
-                <li>Better methods to understand molecular mechanisms of cells</li>
-                <li>Digital tools to enhance civic participation in democracies</li>
-                <li>Strategies to mitigate climate change</li>
-                <li>Designing healthier social networks</li>
+                <li>Diffusion and other generative models</li>
+                <li>Vision, machine or otherwise</li>
+                <li>Safety, broadly defined</li>
             </ul>
-            <p>While at MIT, I worked with <a href="#">Mohsen Ghaffari</a> (MIT CSAIL), <a href="#">Yury Polyanskiy</a> (MIT LIDS), and <a href="#">Xiao Wang</a> (Broad Institute). Over Summer 2024, I worked with <a href="#">0xPARC</a>, an applied cryptography research organization.</p>
-        </div>
+        </p>
+        Currently, I am advised by and work with <a href="https://yuchencui.cc/", target="_blank">Yuchen Cui</a> on robot learning at <a href="https://ucla-robot-intelligence-lab.github.io/", target="_blank">URIL</a>. Previously, I worked with <a href="https://yihanwang617.github.io/>", target="_blank">Yihan Wang</a> on LLM safety.
+        <h3 id="ucla">UCLA</h3>
+        <p>
+            At UCLA, I'm a board member and run fellowships for <a href="https://aisafetyatucla.org/who-we-are/" target="_blank">AI Safety at UCLA</a>. Academically, most of my coursework thus far has been in the electrical engineering and computer science departments. Some personal favorites include:
+            <ul>
+              <li>ECE133A: Applied Numerical Computing (F23, <a href="https://www.seas.ucla.edu/~vandenbe/ee133a.html", target="_blank">site</a>)</li>
+              <li>ECE149: Foundations of Computer Vision (W24, <a href="https://visual.ee.ucla.edu/EE149/", target="_blank">site</a>)</li>
+              <li> PHIL31: Logic, First Course (W24)</li>
+              <li> ECE231E: Channel Coding Theory<strong>*</strong> (S24)</li>
+              <li> CS180: Introduction to Algorithms and Complexity (F24)</li>
+            </ul>
+            An asterisk indicates graduate-level coursework. A full list of coursework can be found <a href="coursework-1.html">elsewhere</a>.
+        </p>
+        <h3 id="writing">Writing</h3>
+        <p>
+          Coming soon...
+        </p>
+        <h3 id="contact">Contact</h3>
+        <p>
+            You can reach me at <strong>raayandhar [at] g [dot] ucla [dot] edu</strong>.
+        </p>
+        <h3 id="credit">Credit</h3>
+        <p>
+          Credit for the inspiration and design of this website goes to <a href="https://br-wa.github.io/", target="_blank">Brandon Wang</a> who himself was inspired by <a href="https://people.csail.mit.edu/moitra/index.html", target="_blank">Ankur Moitra</a>'s website.
     </div>
 </body>
 </html>
