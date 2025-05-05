@@ -257,7 +257,7 @@
 
             <h2>1. Preliminaries</h2>
             <p>
-              The nuclear norm (also known as the trace norm) for a matrix \(M\) is defined as \( \|M\|_* = \sum_i \sigma_i(M) \), where \( \sigma_i(M) \) are the singular values of \(M\). If we were interested in minimizing the nuclear norm, we could write the following semidefinite program:
+              The nuclear norm (also known as the trace norm) for a matrix \(M\) is defined as \( \|M\|_* = \sum_i \sigma_i(M) \), where \( \sigma_i(M) \) are the singular values of \(M\). If we were interested in minimizing the nuclear norm, Prof. Parrilo proposes the following semidefinite program:
             </p>
 	    \[
 	    \begin{aligned}
@@ -305,7 +305,7 @@
 	      $$
 	      Where the first inequality can be shown from noticing that \(\|u_i\|_2 =|v_i\|_2 = 1\) and 
 	      $$
-	      u_i^T W v_i \leq \sup_{\|u_i\|_2 = \|v_i\|_2 = 1} = \sigma_1(W)
+	      u_i^T W v_i \leq \sup_{\|u_i\|_2 = \|v_i\|_2 = 1} u_i^T W v_i = \sigma_1(W)
 	      $$
 	      Then, simplying applying \(\sigma_1(W) \leq 1\) gives us the desired inequality \( \sup_{\sigma_1(W) \leq 1} \langle W, M \rangle \leq \|M\|_* \). Alternatively, for this bound, we have a quick application of the <a href="https://en.wikipedia.org/wiki/Trace_inequality">von Neumann trace inequality</a>:
 	      $$
