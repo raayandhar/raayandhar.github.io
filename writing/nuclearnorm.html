@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-site-verification" content="V8HrLbWbjt8cDieQAiaQ76BOBsDdpjpa3GyIiIzyO_4"/>
+    <title>Nuclear norm minimization</title>
+    <link rel="stylesheet" href="../style.css">
+    
+    <!-- MathJax for LaTeX support -->
+    <script>
+      window.MathJax = {
+	  tex: {
+	      packages: {
+		  // add amsmath to the default TeX loader:
+		  '[+]': ['amsmath']
+	      }
+	  }
+      };
+    </script>
+    <script
+      id="MathJax-script"
+      async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <!-- Highlight.js for code syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            document.querySelectorAll('pre code').forEach((el) => {
+                hljs.highlightElement(el);
+            });
+        });
+        
+        // Array of profile images to choose from randomly
+	const profileImages = [
+	    "../profile-images/image2.jpg",
+	    "../profile-images/image3.jpg",
+	    "../profile-images/image4.jpg",
+	    "../profile-images/image5.jpg",
+	    "../profile-images/image6.jpg",
+	    "../profile-images/image7.jpg",
+	    "../profile-images/image8.jpg",
+	    "../profile-images/image9.jpg",
+	    "../profile-images/image10.jpg",
+	    "../profile-images/image11.jpg",
+	    "../profile-images/image12.jpg",
+	    "../profile-images/image13.jpg",
+	    "../profile-images/image14.jpg",
+	    "../profile-images/image15.jpg",
+	    "../profile-images/image16.jpg",
+	    "../profile-images/image17.jpg",
+	    "../profile-images/image18.jpg",
+	    "../profile-images/image19.jpg"
+	];
+
+        
+        // Function to set a random profile image on page load
+        function setRandomProfileImage() {
+            const randomIndex = Math.floor(Math.random() * profileImages.length);
+            const profileImageElement = document.getElementById("profile-image");
+            if (profileImageElement) {
+                profileImageElement.src = profileImages[randomIndex];
+            }
+        }
+        
+        // Set the image when the window loads
+        window.onload = function() {
+            setRandomProfileImage();
+            // Add any other onload functions here if needed
+        };
+    </script>
+    
+    <style>
+        /* Additional styles for blog posts */
+        .post-header {
+            margin-bottom: 2em;
+            border-bottom: 2px solid #a9a9d6;
+            padding-bottom: 1em;
+        }
+        
+        .post-title {
+            font-size: 24px;
+            margin-bottom: 0.25em;
+        }
+        
+        .post-date {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 1em;
+        }
+        
+        .post-content {
+            line-height: 1.6;
+        }
+        
+        .post-content h2 {
+            font-size: 20px;
+            margin-top: 1.5em;
+            margin-bottom: 0.75em;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 0.25em;
+        }
+        
+        .post-content h3 {
+            font-size: 18px;
+            margin-top: 1.25em;
+            margin-bottom: 0.5em;
+        }
+        
+        .post-content p {
+            margin-bottom: 1em;
+        }
+        
+        .post-content ul, .post-content ol {
+            margin-bottom: 1em;
+            padding-left: 2em;
+        }
+        
+        .post-content li {
+            margin-bottom: 0.5em;
+        }
+        
+        .post-content blockquote {
+            border-left: 4px solid  #a9a9d6;
+            padding-left: 1em;
+            color: #555;
+            font-style: italic;
+            margin: 1em 0;
+        }
+        
+        .post-content img {
+            max-width: 100%;
+            display: block;
+            margin: 1em auto;
+        }
+        
+        .post-content figcaption {
+            font-size: 12px;
+            color: #666;
+            text-align: center;
+            margin-top: 0.5em;
+        }
+        
+        .post-content code {
+            font-family: Consolas, Monaco, 'Andale Mono', monospace;
+            background-color: #f5f5f5;
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+        }
+        
+        .post-content pre {
+            background-color: #f5f5f5;
+            padding: 1em;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 1em 0;
+        }
+        
+        .post-content pre code {
+            background-color: transparent;
+            padding: 0;
+        }
+        
+        .post-content .math {
+            overflow-x: auto;
+            margin: 1em 0;
+            padding: 0.5em 0;
+        }
+        
+        .post-content table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 1em 0;
+        }
+        
+        .post-content table, .post-content th, .post-content td {
+            border: 1px solid #ddd;
+        }
+        
+        .post-content th, .post-content td {
+            padding: 0.5em;
+            text-align: left;
+        }
+        
+        .post-content th {
+            background-color: #f5f5f5;
+        }
+        
+        .post-footer {
+            margin-top: 2em;
+            padding-top: 1em;
+            border-top: 2px solid #a9a9d6;
+        }
+        
+        .post-tags {
+            margin-bottom: 1em;
+        }
+        
+        .tag {
+            display: inline-block;
+            background-color: #f0f0f0;
+            padding: 0.25em 0.5em;
+            border-radius: 3px;
+            margin-right: 0.5em;
+            font-size: 12px;
+            color: #555;
+        }
+        
+        .post-navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1em;
+        }
+        
+        .post-navigation a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        
+        .post-navigation a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <img id="profile-image" src="../pfp.jpg" alt="Profile Picture" class="profile-picture">
+        <p class="navhead"><b>Navigation</b></p>
+        <a class="navlink" href="../index.html#home">Home</a>
+        <a class="navlink" href="../index.html#interests">Interests</a>
+        <a class="navlink" href="../index.html#ucla">UCLA</a>
+        <a class="navlink" href="../index.html#writing">Writing</a>
+        <a class="navlink" href="../index.html#contact">Contact</a>
+        <a class="navlink" href="../index.html#credit">Credit</a>
+        <p class="navhead"><b>Writing</b></p>
+	<a class="navlink" href="../writing.html#writing">Home</a>
+        <a class="navlink" href="../writing.html#technical">Technical</a>
+        <p class="navhead"><b>Quick Links</b></p>
+        <a class="navlink" href="https://github.com/raayandhar" target="_blank">GitHub</a>
+        <a class="navlink" href="https://x.com/raayandhar" target="_blank">Twitter (X)</a>
+        <a class="navlink" href="https://www.linkedin.com/in/raayan-dhar-4909051b1/" target="_blank">LinkedIn</a>
+    </div>
+    <div class="main">
+        <div class="post-header">
+            <h1 class="post-title">Nuclear norm minimization</h1>
+            <p class="post-date">May 4, 2025</p>
+        </div>
+        
+        <div class="post-content">
+            <p>
+	      <p>The <a href="https://simons.berkeley.edu/homepage">Simons Institute for the Theory of Computing</a> makes their workshop tutorials available online. In 2017, they held the "<a href="https://simons.berkeley.edu/workshops/bridging-continuous-discrete-optimization-boot-camp/videos#simons-tabs">Bridging Continuous and Discrete Optimization Boot Camp</a>." While watching the first talk on <a href="https://www.youtube.com/watch?v=HdZajqWl15I&t=979s">LP/SDP Hierarchies and Sum of Squares Proofs</a>, the speaker <a href="https://www.mit.edu/~parrilo/">Pablo Parrilo</a> brings an interesting example: nuclear norm minimization via semidefinite programming. This post goes over deriving this SDP and an interesting application of nuclear norm minimization.</p>
+            </p>
+
+            <h2>1. Preliminaries</h2>
+            <p>
+              The nuclear norm (also known as the trace norm) for a matrix \(M\) is defined as \( \|M\|_* = \sum_i \sigma_i(M) \), where \( \sigma_i(M) \) are the singular values of \(M\). If we were interested in minimizing the nuclear norm, we could write the following semidefinite program:
+            </p>
+	    \[
+	    \begin{aligned}
+	    \min\;&
+	    \frac{1}{2}\bigl(\text{tr } U +\text{tr } V \bigr) \\[6pt]
+	    \text{s.t.}\;&
+	    \begin{bmatrix}
+	    U & M \\[3pt]
+	    M^T & V
+	    \end{bmatrix}
+	    \succeq 0\,. 
+	    \end{aligned}
+	    \]
+            <p>
+              where we have matrix optimization variables \(U, V \in \mathbf{S}^n\). Using tools from  <a href="https://www.seas.ucla.edu/~vandenbe/ee236b/ee236b.html">ECE236B</a>, we derive the SDP above. Throughout this post, we choose the matrix inner product to be the trace and the singular value matrix \( \Sigma \) has its singular values in sorted order.
+            </p>
+	    <h2>2. Derivation</h2>
+	    <h3>2.1 Detour: the dual norm</h3>
+	    <p>
+	      For a given norm \( \| \ \| \), its dual norm is defined as
+	      $$
+	      \|M\|_* = \sup_{ \|W\| \leq 1} \langle M, W \rangle
+	      $$
+	      (note the unfortunate overloading of the asterisk subscript. A norm's dual norm and the nuclear norm are different, except in one case.) It turns out the dual norm of the nuclear norm is the operator norm, or matrix 2-norm, defined as
+	      $$
+	      \|M\|_2 = \max_{x \neq 0} \frac{\|Mx\|_2}{\|x\|_2} = \max_{\|x\|_2 = 1} \|Mx\|_2 = \sigma_1(M)
+	      $$
+	      which are all equivalent expressions. The operator norm is also used to define the condition number of a matrix (\( \kappa(A) = \| A\|_2 \| A^{-1} \|_2 \)), which is useful for understanding the "stability" of a matrix, i.e. its sensitivity to perturbations. We now prove the equality (largely due to this <a href="https://math.stackexchange.com/questions/1158798/show-that-the-dual-norm-of-the-spectral-norm-is-the-nuclear-norm"> math exchange post</a>) of this expression by proving both directions of the inequality. First, we prove
+	      $$
+	      \|M\|_* = \sum_i \sigma_i \leq \sup_{\sigma_1(W) \leq 1} \text{tr } M^T W
+	      $$
+	      Take \(M = U \Sigma V^T\) to be the SVD of \(M\). If we choose \(W = U I V^T\), notice that this satisfies \(\sigma_1(W) \leq 1\) with equality (in fact, all singular values are 1). Then, we have
+	      $$
+	      \text{tr } VIU^TU \Sigma V^T = \text{tr } V \Sigma V^T = \text{tr } \Sigma = \sum_i \sigma_i
+	      $$
+	      where we apply the orthogonality properties of \(U, V\) and the cyclic property of the trace. This directly means that 
+	      $$ \sup_{\sigma_1(W) \leq 1} \langle W, M \rangle \geq \|M\|_* $$
+	      We then turn to the other direction. Once again taking the SVD of \(M\), we have the following chain of expressions
+	      $$
+	      \sup_{\sigma_1(W) \leq 1} \text{tr } W^T M = \sup_{\sigma_1(W) \leq 1} \text{tr } W^T U \Sigma V^T = \sup_{\sigma_1(W) \leq 1} \text{tr } V^T W^T U \Sigma = \sup_{\sigma_1(W) \leq 1} \langle UWV^T, \Sigma \rangle
+	      $$
+	      We can now decompose this inner product directly into a trace expressed via a sum.
+	      $$
+	      \langle UWV^T, \Sigma \rangle = \sum_i \sigma_i (UWV^T)_{ii} = \sum_i \sigma_i u_i^T W v_i \leq \sum_i \sigma_i \sigma_1 (W)
+	      $$
+	      Where the first inequality can be shown from noticing that \(\|u_i\|_2 =|v_i\|_2 = 1\) and 
+	      $$
+	      u_i^T W v_i \leq \sup_{\|u_i\|_2 = \|v_i\|_2 = 1} = \sigma_1(W)
+	      $$
+	      Then, simplying applying \(\sigma_1(W) \leq 1\) gives us the desired inequality \( \sup_{\sigma_1(W) \leq 1} \langle W, M \rangle \leq \|M\|_* \). Alternatively, for this bound, we have a quick application of the <a href="https://en.wikipedia.org/wiki/Trace_inequality">von Neumann trace inequality</a>:
+	      $$
+	      \sup_{\sigma_1(W) \leq 1} \text{tr } W^T M \leq \sum_i \sigma_i(W) \sigma_i(M) \leq \sum_i \sigma_i(M) = \|M\|_*
+	      $$
+	      Thus, we have proven that the dual norm of the nuclear norm is the operator norm.
+	    </p>
+	    <h3>2.2 The primal</h3>
+	    <p>
+	      We have just spent too much time proving that
+	      $$
+	      \|M\|_* = \sup_{\sigma_1(W) \leq 1} \langle W, M \rangle
+	      $$
+	      However, we can now notice that we can desribe this expression as an optimization problem:
+	      \[
+	      \begin{aligned}
+	      \max_W\;&
+	      \langle W, M \rangle \\[6pt]
+	      \text{s.t.}\;&
+	      \|W\|_2 \leq 1\,.
+	      \end{aligned}
+	      \]
+	      The constraint \( \|W\|_2 \leq 1 \) can be rewritten as a constraint on all of its singular values, since restricting \(\sigma_1 \leq 1\) means that all singular values must be less than or equal to 1. As an inequality, we can write this as
+	      $$ I \succeq W^TW $$
+	      to see this, take the eigendecomposition \(W^TW = Q \Lambda Q^T \). Then, 
+	      <div class="post-content math">
+		$$
+		\begin{align*}
+		I &\succeq Q \Lambda Q^T \\
+		Q^T Q &\succeq Q^T Q \Lambda Q^T Q \\
+		I &\succeq \Lambda
+		\end{align*}
+		$$
+	      </div>
+	      Since \(\lambda_i (W^TW) = (\sigma_i(W))^2\), and \(\sqrt{I_{ii}} = 1\) this constraint successfully bounds \(\| W \|_2 \leq 1\). We can now re-write our constraint as
+	      $$
+	      \begin{bmatrix}
+	      I & W \\
+	      W^T & I
+	      \end{bmatrix}
+	      \succeq 0
+	      $$
+	      whose equivalence can be shown by easy application of the <a href="https://en.wikipedia.org/wiki/Schur_complement">Schur complement</a>. We can now write our optimization problem as the primal SDP
+	      \[
+	      \begin{aligned}
+	      \max_W\;&
+	      \langle M, W \rangle \\[6pt]
+	      \text{s.t.}\;&
+	      \begin{bmatrix}
+	      I & W \\[3pt]
+	      W^T & I
+	      \end{bmatrix}
+	      \succeq 0\,. 
+	      \end{aligned}
+	      \]
+	      <h3>2.3 The dual</h3>
+	      <p>
+		From our primal SDP, we can now derive the dual SDP. We introduce a dual (matrix) variable
+		$$
+		Z = \begin{bmatrix}
+		Z_{11} & Z_{12} \\[3pt]
+		Z_{12}^T & Z_{22}
+		\end{bmatrix}
+		$$
+		for the primal LMI constraint, whose block matrix we call \(B\). We form the Lagrangian
+		$$
+		L(W, Z) = \langle M, W \rangle - \langle B, Z \rangle
+		$$
+		Working out the matrix multiplication, taking the trace and gathering the terms, we have
+		$$
+		L(W, Z) = \text{tr } W^T (M - 2 Z_{12}) - (\text{tr } Z_{11} + \text{tr } Z_{22})
+		$$
+		In order for \(W\) to vanish, we require that \(M - 2 Z_{12} = 0\). Then, our dual function is
+		<div class="post-content math">
+		  $$
+		  g(Z) \;=\;
+		  \begin{cases}
+		  -\text{tr }(Z_{11}) \;-\;\text{tr }(Z_{22}),
+		  & \text{if }
+		  M - 2\,Z_{12} = 0
+		  \quad\text{and}\quad
+		  Z
+		  \succeq 0,\\[8pt]
+		  -\infty,
+		  & \text{otherwise.}
+		  \end{cases}
+		  $$
+		</div>
+		This means that \(Z_{12} = \frac{1}{2} M\). Then, our dual SDP is
+		\[
+		\begin{aligned}
+		\min_{Z_{11}, Z_{22}}\;&
+		\text{tr } Z_{11} + \text{tr } Z_{22}\\[6pt]
+		\text{s.t.}\;&
+		\begin{bmatrix}
+		Z_{11} & \frac{M}{2} \\[3pt]
+		\frac{M^T}{2} & Z_{22}
+		\end{bmatrix}
+		\succeq 0\,. 
+		\end{aligned}
+		\]
+		If we scale our constraint by 2, scale our objective by 1/2, rename \(Z_{11} \to U\) and \(Z_{22} \to V\), we have the desired SDP:
+		\[
+		\begin{aligned}
+		\min_{U, V}\;&
+		\frac{1}{2}(\text{tr } U + \text{tr } V)\\[6pt]
+		\text{s.t.}\;&
+		\begin{bmatrix}
+		U & M \\[3pt]
+		M^T & V
+		\end{bmatrix}
+		\succeq 0\,. 
+		\end{aligned}
+		\]
+	      </p>
+	      <h2>3. Applications</h2>
+	    <p>
+	      Still in the process of writing, will be discussing Candes and Recht's work on rank minimization, matrix completion, and other applications as I find them.
+	    </p>
+        </div>
+        
+        <div class="post-footer">
+            <div class="post-tags">
+                <span class="tag">convex optimization</span>
+            </div>
+            <div class="post-navigation">
+                <a href="previous-post.html">&larr; Previous</a>
+                <a href="next-post.html">Next &rarr;</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+</body>
+</html>
