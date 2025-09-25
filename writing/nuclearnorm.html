@@ -252,7 +252,7 @@
         
         <div class="post-content">
             <p>
-	      <p>The <a href="https://simons.berkeley.edu/homepage">Simons Institute for the Theory of Computing</a> makes their workshop tutorials available online. In 2017, they held the "<a href="https://simons.berkeley.edu/workshops/bridging-continuous-discrete-optimization-boot-camp/videos#simons-tabs">Bridging Continuous and Discrete Optimization Boot Camp</a>." While watching the first talk on <a href="https://www.youtube.com/watch?v=HdZajqWl15I&t=979s">LP/SDP Hierarchies and Sum of Squares Proofs</a>, the speaker <a href="https://www.mit.edu/~parrilo/">Pablo Parrilo</a> brings an interesting example: nuclear norm minimization via semidefinite programming. This post goes over deriving this SDP and an interesting application of nuclear norm minimization.</p>
+	      <p>The <a href="https://simons.berkeley.edu/homepage">Simons Institute for the Theory of Computing</a> makes their workshop tutorials available online. In 2017, they held the "<a href="https://simons.berkeley.edu/workshops/bridging-continuous-discrete-optimization-boot-camp/videos#simons-tabs">Bridging Continuous and Discrete Optimization Boot Camp</a>." While watching the first talk on <a href="https://www.youtube.com/watch?v=HdZajqWl15I&t=979s">LP/SDP Hierarchies and Sum of Squares Proofs</a>, the speaker <a href="https://www.mit.edu/~parrilo/">Pablo Parrilo</a> brings an interesting example: nuclear norm minimization via semidefinite programming. This post goes over deriving this SDP and some applications of nuclear norm minimization.</p>
             </p>
 
             <h2>1. Preliminaries</h2>
@@ -421,12 +421,35 @@
 		\end{aligned}
 		\]
 	      </p>
-	      <h2>3. Applications</h2>
-	    <p>
-	      Still in the process of writing, will be discussing Candes and Recht's work on rank minimization, matrix completion, and other applications as I find them.
-	    </p>
+	  <h2>3. Applications</h2>
+	  The crux of the objective \(\min \|M\|_*\) is to provide a convex approach to induce some low-rank structure in a matrix (or vice versa for maximization). We discuss some origins and applications below.
+	  <h3>3.1 Early Origins</h3>
+	  <p>
+	  An early paper from Boyd's group in 2001 proposed the nuclear norm as a heuristic for reducing the order of controllers and systems [cite]. These problems typically involve seeking some low-rank solution to linear matrix inequalities. The observation made in [cite] is that if the decision matrix is positive semidefinite, then minimizing its trace is a convex proxy for minimizing rank - this is our nuclear norm (which, they also note is sometimes called the <em>Ky-Fan norm</em>). Importantly, they show that the nuclear norm is the tightest convex relaxation: for the set of matrices with operator norm (recall: nuclear norm's dual) bounded by 1, the nuclear norm is the convex envelope of the rank function, meaning (... fill in here...).
+	  </p>
+	  <h3>3.2 Low-Rank Matrix Completion</h3>
+	  <p>
+	  One of the more well known applications of nuclear norm minimization is the matrix completion problem: one is given only a subset of entries of some (large) matrix and needs to infer the missing entries with the assumption that the complete matrix is low-rank. However, directly enforcing "find the lowest rank matrix consistent with the known entries" is a NP-hard combinatorial problem (see [cite]), and requires additional aassumptions in order to solve this problem more practically. Candes and Recht (cite) showed that a convex relaxation can <em>exactly</em> solve this problem under many cases. Namely, under mild randomness assumptions on the position of the known entries and on the true low-rank matrix, solving the convex optimization problem
+	    $$
+	    \min_X \|X\|_* \ \ \ \text{s.t. $X_{ij} = M_{ij}$ for all observed entries}
+	    $$
+	    will with high probability recover the <em>exact</em> matrix \(M\). The contribution of Candes and Recht was to show that exact recovery via the nuclear norm under these assumptions were possible with\(O(n^{1.2r}\log n)\) observed entries for an \(n \times n\) matrix of rank \(r\).
+	  </p>
+	  <p>
+	    Those familiar with SDP solvers know that, bgenerally, solving large SDP formulations does not scale well, especially for matrix completion problems where the matrix variables are of size equal to the full matrix. To approximate the matrix with minimum nuclear norm, one can use Singular Value Thresholding[cite], which performs iterative soft-thresholding of singular values and scales better than general-purpose SDP solvers.
+	  </p>
+	  <h3>3.2 Robust Principal Component Analysis</h3>
+	  <p>
+	  Robust PCA deals with separating a matrix into low-rank and sparse subsets. If our data matrix is largely low-rank but has unual sparse errors or outliers, classical PCA fails because these outliers can shift the low-rank subspace estimation adversarially. Robust PCA aims to recover the <em>true</em> low-rank component despite the outliers.
+	  </p>
+	  <p>
+	    Principal Component Pursuit [cite] is a convex program that shows how we can solve this:
+	    $$
+	    \min_{L, S} \|L\|_* + \lambda \|S\|_1 \ \ \ \text{s.t. $L + S = D$}
+	    $$
+	    where \(D\) is the observed data matrix (assumed to be \(L_{\text{true}}\ + S_{\text{true}}\) with \(L_{\text{true}}\) low-rank and \(S_{\text{true}}\) sparse). The nuclear norm in \(L\) promotes a low-rank solution and the \(L_1\) norm promotes sparsity in \(S\). Under reasonable assumptions, this program exactly recovers both components \(L_{\text{true}}\) and \(S_{\text{true}}\) with high-probability. More interestingly, this also implies that all decompositions \(D = L + S\), the one with minimum nuclear norm plus \(L_1\) norm is the "correct" one.
+	  </p>
         </div>
-        
         <div class="post-footer">
             <div class="post-tags">
                 <span class="tag">convex optimization</span>
