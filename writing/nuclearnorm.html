@@ -422,33 +422,61 @@
 		\]
 	      </p>
 	  <h2>3. Applications</h2>
-	  The crux of the objective \(\min \|M\|_*\) is to provide a convex approach to induce some low-rank structure in a matrix (or vice versa for maximization). We discuss some origins and applications below.
+	  <p>
+	    The crux of the objective \( \min \|M\|_* \) is to provide a convex approach to induce some low-rank structure in a matrix (or, in maximization form, to extract low-rank structure from data). We discuss applications below.
+	  </p>
+
 	  <h3>3.1 Early Origins</h3>
 	  <p>
-	  An early paper from Boyd's group in 2001 proposed the nuclear norm as a heuristic for reducing the order of controllers and systems [cite]. These problems typically involve seeking some low-rank solution to linear matrix inequalities. The observation made in [cite] is that if the decision matrix is positive semidefinite, then minimizing its trace is a convex proxy for minimizing rank - this is our nuclear norm (which, they also note is sometimes called the <em>Ky-Fan norm</em>). Importantly, they show that the nuclear norm is the tightest convex relaxation: for the set of matrices with operator norm (recall: nuclear norm's dual) bounded by 1, the nuclear norm is the convex envelope of the rank function, meaning (... fill in here...).
+	    An early paper from Boyd’s group in 2001 proposed the nuclear norm as a heuristic for reducing the order of controllers and systems. These problems typically involve seeking some low-rank solution to linear matrix inequalities. The observation made in <a href="#fazel2001">[Fazel et al., 2001]</a> is that if the decision matrix is positive semidefinite, then minimizing its trace is a convex proxy for minimizing rank — this is our nuclear norm (which the authors not is also sometimes called the <em>Ky Fan norm</em>). Importantly, they show that the nuclear norm is the tightest convex relaxation: for the set of matrices with operator norm (recall: the dual of the nuclear norm) bounded by 1, the nuclear norm is the <em>convex envelope</em> of the rank function, meaning it is the largest convex function that under-approximates rank on this set.
 	  </p>
+
 	  <h3>3.2 Low-Rank Matrix Completion</h3>
 	  <p>
-	  One of the more well known applications of nuclear norm minimization is the matrix completion problem: one is given only a subset of entries of some (large) matrix and needs to infer the missing entries with the assumption that the complete matrix is low-rank. However, directly enforcing "find the lowest rank matrix consistent with the known entries" is a NP-hard combinatorial problem (see [cite]), and requires additional aassumptions in order to solve this problem more practically. Candes and Recht (cite) showed that a convex relaxation can <em>exactly</em> solve this problem under many cases. Namely, under mild randomness assumptions on the position of the known entries and on the true low-rank matrix, solving the convex optimization problem
-	    $$
-	    \min_X \|X\|_* \ \ \ \text{s.t. $X_{ij} = M_{ij}$ for all observed entries}
-	    $$
-	    will with high probability recover the <em>exact</em> matrix \(M\). The contribution of Candes and Recht was to show that exact recovery via the nuclear norm under these assumptions were possible with\(O(n^{1.2r}\log n)\) observed entries for an \(n \times n\) matrix of rank \(r\).
+	    One of the more well-known applications of nuclear norm minimization is the <em>matrix completion</em> problem: one is given only a subset of entries of some (large) matrix and needs to infer the missing entries under the assumption that the complete matrix is low-rank. However, directly enforcing “find the lowest-rank matrix consistent with the known entries” is NP-hard <a href="#recht2010">[Recht et al., 2010]</a>. To make this problem tractable, additional assumptions are required.
 	  </p>
 	  <p>
-	    Those familiar with SDP solvers know that, bgenerally, solving large SDP formulations does not scale well, especially for matrix completion problems where the matrix variables are of size equal to the full matrix. To approximate the matrix with minimum nuclear norm, one can use Singular Value Thresholding[cite], which performs iterative soft-thresholding of singular values and scales better than general-purpose SDP solvers.
+	    In <a href="#candes2009">[Candès & Recht, 2009]</a> it was shown that a convex relaxation can <em>exactly</em> solve this problem under many cases. Namely, under mild randomness and incoherence assumptions on the position of the known entries and on the true low-rank matrix, solving the convex optimization problem
 	  </p>
-	  <h3>3.2 Robust Principal Component Analysis</h3>
-	  <p>
-	  Robust PCA deals with separating a matrix into low-rank and sparse subsets. If our data matrix is largely low-rank but has unual sparse errors or outliers, classical PCA fails because these outliers can shift the low-rank subspace estimation adversarially. Robust PCA aims to recover the <em>true</em> low-rank component despite the outliers.
-	  </p>
-	  <p>
-	    Principal Component Pursuit [cite] is a convex program that shows how we can solve this:
+	  <div class="post-content math">
 	    $$
-	    \min_{L, S} \|L\|_* + \lambda \|S\|_1 \ \ \ \text{s.t. $L + S = D$}
-	    $$
-	    where \(D\) is the observed data matrix (assumed to be \(L_{\text{true}}\ + S_{\text{true}}\) with \(L_{\text{true}}\) low-rank and \(S_{\text{true}}\) sparse). The nuclear norm in \(L\) promotes a low-rank solution and the \(L_1\) norm promotes sparsity in \(S\). Under reasonable assumptions, this program exactly recovers both components \(L_{\text{true}}\) and \(S_{\text{true}}\) with high-probability. More interestingly, this also implies that all decompositions \(D = L + S\), the one with minimum nuclear norm plus \(L_1\) norm is the "correct" one.
+\min_X \|X\|_* \quad \text{s.t. } X_{ij} = M_{ij} \;\; \text{for all observed entries}
+$$
+	  </div>
+	  <p>
+	    will with high probability recover the <em>exact</em> matrix \(M\). Their analysis showed that exact recovery via nuclear norm minimization is possible with about \(O(n^{1.2} r \log n)\) observed entries for an \(n \times n\) matrix of rank \(r\).
 	  </p>
+	  <p>
+	    Those familiar with SDP solvers know that, generally, solving large SDP formulations does not scale well, especially for matrix completion problems where the matrix variables are of size equal to the full matrix. To approximate the matrix with minimum nuclear norm, one can use <em>Singular Value Thresholding</em> <a href="#cai2010">[Cai et al., 2010]</a>, which performs iterative soft-thresholding of singular values and scales better than general-purpose SDP solvers.
+	  </p>
+
+	  <h3>3.3 Robust Principal Component Analysis</h3>
+	  <p>
+	    <em>Robust PCA</em> deals with separating a matrix into low-rank and sparse components. If our data matrix is largely low-rank but has unusual sparse errors or outliers, classical PCA fails because these outliers can shift the low-rank subspace estimation adversarially. Robust PCA aims to recover the <em>true</em> low-rank component despite the outliers.
+	  </p>
+	  <p>
+	    <a href="#candes2011">[Candès et al., 2011]</a> introduced <em>Principal Component Pursuit</em>, a convex program that solves:
+	  </p>
+	  <div class="post-content math">
+	    $$
+\min_{L, S} \|L\|_* + \lambda \|S\|_1 \quad \text{s.t. } L + S = D
+$$
+	  </div>
+	  <p>
+	    where \(D\) is the observed data matrix (assumed to be \(L_{\text{true}} + S_{\text{true}}\) with \(L_{\text{true}}\) low-rank and \(S_{\text{true}}\) sparse). The nuclear norm on \(L\) promotes a low-rank solution and the \(L_1\) norm promotes sparsity in \(S\). Under reasonable assumptions, this program exactly recovers both components \(L_{\text{true}}\) and \(S_{\text{true}}\) with high probability. More interestingly, this also implies that among all decompositions \(D = L + S\) the one with minimum nuclear norm plus \(L_1\) norm is the <em>correct</em> one.
+	  </p>
+	  <h2>References</h2>
+	  <ul>
+	    <li id="fazel2001">Maryam Fazel, Haitham Hindi, and Stephen Boyd. <a href="https://web.stanford.edu/~boyd/papers/pdf/rank_min_heur.pdf">A rank minimization heuristic with application to minimum order system approximation</a>. <em>Proc. American Control Conference</em>, 2001.</li>
+
+	    <li id="recht2010">Benjamin Recht, Maryam Fazel, and Pablo A. Parrilo. <a href="https://epubs.siam.org/doi/10.1137/070697835">Guaranteed minimum-rank solutions of linear matrix equations via nuclear norm minimization</a>. <em>SIAM Review</em>, 52(3):471–501, 2010.</li>
+
+	    <li id="candes2009">Emmanuel J. Candès and Benjamin Recht. <a href="https://arxiv.org/abs/0901.3150">Exact matrix completion via convex optimization</a>. <em>Foundations of Computational Mathematics</em>, 9(6):717–772, 2009.</li>
+
+	    <li id="cai2010">Jian-Feng Cai, Emmanuel J. Candès, and Zuowei Shen. <a href="https://arxiv.org/abs/0810.3286">A singular value thresholding algorithm for matrix completion</a>. <em>SIAM Journal on Optimization</em>, 20(4):1956–1982, 2010.</li>
+
+	    <li id="candes2011">Emmanuel J. Candès, Xiaodong Li, Yi Ma, and John Wright. <a href="https://arxiv.org/abs/0912.3599">Robust principal component analysis?</a>. <em>Journal of the ACM</em>, 58(3):1–37, 2011.</li>
+	  </ul>
         </div>
         <div class="post-footer">
             <div class="post-tags">
