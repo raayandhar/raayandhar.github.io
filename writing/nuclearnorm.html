@@ -54,7 +54,25 @@
 	    "../profile-images/image16.jpg",
 	    "../profile-images/image17.jpg",
 	    "../profile-images/image18.jpg",
-	    "../profile-images/image19.jpg"
+	    "../profile-images/image19.jpg",
+	    "../profile-images/image20.jpg",
+	    "../profile-images/image21.jpg",
+	    "../profile-images/image22.jpg",
+	    "../profile-images/image23.jpg",
+	    "../profile-images/image24.jpg",
+	    "../profile-images/image25.jpg",
+	    "../profile-images/image26.jpg",
+	    "../profile-images/image27.jpg",
+	    "../profile-images/image28.jpg",
+	    "../profile-images/image29.jpg",
+	    "../profile-images/image30.jpg",
+	    "../profile-images/image31.jpg",
+	    "../profile-images/image32.jpg",
+	    "../profile-images/image33.jpg",
+	    "../profile-images/image34.jpg",
+	    "../profile-images/image35.jpg",
+	    "../profile-images/image36.jpg",
+	    "../profile-images/image37.jpg"
 	];
 
         
@@ -224,6 +242,24 @@
         .post-navigation a:hover {
             text-decoration: underline;
         }
+
+        /* Hover dropdown styles for nav subsections */
+        .nav-section {
+            position: relative;
+        }
+
+        .nav-subsections {
+            display: none;
+            padding-left: 0;
+        }
+
+        .nav-section:hover .nav-subsections {
+            display: block;
+        }
+
+        .navlink-sub {
+            padding-left: 1.5em;
+        }
     </style>
 </head>
 <body>
@@ -233,12 +269,28 @@
         <a class="navlink" href="../index.html#home">Home</a>
         <a class="navlink" href="../index.html#interests">Interests</a>
         <a class="navlink" href="../index.html#ucla">UCLA</a>
-        <a class="navlink" href="../index.html#writing">Writing</a>
+        <a class="navlink" href="../writing.html">Writing</a>
         <a class="navlink" href="../index.html#contact">Contact</a>
         <a class="navlink" href="../index.html#credit">Credit</a>
-        <p class="navhead"><b>Writing</b></p>
-	<a class="navlink" href="../writing.html#writing">Home</a>
-        <a class="navlink" href="../writing.html#technical">Technical</a>
+        <p class="navhead"><b>Post</b></p>
+	<a class="navlink" href="#preliminaries">1. Preliminaries</a>
+        <div class="nav-section">
+            <a class="navlink" href="#derivation">2. Derivation</a>
+            <div class="nav-subsections">
+                <a class="navlink navlink-sub" href="#dual-norm">2.1 Detour: the dual norm</a>
+                <a class="navlink navlink-sub" href="#primal">2.2 The primal</a>
+                <a class="navlink navlink-sub" href="#dual">2.3 The dual</a>
+            </div>
+        </div>
+        <div class="nav-section">
+            <a class="navlink" href="#applications">3. Applications</a>
+            <div class="nav-subsections">
+                <a class="navlink navlink-sub" href="#early-origins">3.1 Early Origins</a>
+                <a class="navlink navlink-sub" href="#matrix-completion">3.2 Low-Rank Matrix Completion</a>
+                <a class="navlink navlink-sub" href="#robust-pca">3.3 Robust Principal Component Analysis</a>
+            </div>
+        </div>
+        <a class="navlink" href="#references">References</a>
         <p class="navhead"><b>Quick Links</b></p>
         <a class="navlink" href="https://github.com/raayandhar" target="_blank">GitHub</a>
         <a class="navlink" href="https://x.com/raayandhar" target="_blank">Twitter (X)</a>
@@ -255,7 +307,7 @@
 	      <p>The <a href="https://simons.berkeley.edu/homepage">Simons Institute for the Theory of Computing</a> makes their workshop tutorials available online. In 2017, they held the "<a href="https://simons.berkeley.edu/workshops/bridging-continuous-discrete-optimization-boot-camp/videos#simons-tabs">Bridging Continuous and Discrete Optimization Boot Camp</a>." While watching the first talk on <a href="https://www.youtube.com/watch?v=HdZajqWl15I&t=979s">LP/SDP Hierarchies and Sum of Squares Proofs</a>, the speaker <a href="https://www.mit.edu/~parrilo/">Pablo Parrilo</a> brings an interesting example: nuclear norm minimization via semidefinite programming. This post goes over deriving this SDP and some applications of nuclear norm minimization.</p>
             </p>
 
-            <h2>1. Preliminaries</h2>
+            <h2 id="preliminaries">1. Preliminaries</h2>
             <p>
               The nuclear norm (also known as the trace norm) for a matrix \(M\) is defined as \( \|M\|_* = \sum_i \sigma_i(M) \), where \( \sigma_i(M) \) are the singular values of \(M\). If we were interested in minimizing the nuclear norm, Prof. Parrilo proposes the following semidefinite program:
             </p>
@@ -274,8 +326,8 @@
             <p>
               where we have matrix optimization variables \(U, V \in \mathbf{S}^n\). Using tools from  <a href="https://www.seas.ucla.edu/~vandenbe/ee236b/ee236b.html">ECE236B</a>, we derive the SDP above. Throughout this post, we choose the matrix inner product to be the trace and the singular value matrix \( \Sigma \) has its singular values in sorted order.
             </p>
-	    <h2>2. Derivation</h2>
-	    <h3>2.1 Detour: the dual norm</h3>
+	    <h2 id="derivation">2. Derivation</h2>
+	    <h3 id="dual-norm">2.1 Detour: the dual norm</h3>
 	    <p>
 	      For a given norm \( \| \ \| \), its dual norm is defined as
 	      $$
@@ -313,7 +365,7 @@
 	      $$
 	      Thus, we have proven that the dual norm of the nuclear norm is the operator norm.
 	    </p>
-	    <h3>2.2 The primal</h3>
+	    <h3 id="primal">2.2 The primal</h3>
 	    <p>
 	      We have just spent too much time proving that
 	      $$
@@ -361,7 +413,7 @@
 	      \succeq 0\,. 
 	      \end{aligned}
 	      \]
-	      <h3>2.3 The dual</h3>
+	      <h3 id="dual">2.3 The dual</h3>
 	      <p>
 		From our primal SDP, we can now derive the dual SDP. We introduce a dual (matrix) variable
 		$$
@@ -421,17 +473,17 @@
 		\end{aligned}
 		\]
 	      </p>
-	  <h2>3. Applications</h2>
+	  <h2 id="applications">3. Applications</h2>
 	  <p>
 	    The crux of the objective \( \min \|M\|_* \) is to provide a convex approach to induce some low-rank structure in a matrix (or, in maximization form, to extract low-rank structure from data). We discuss applications below.
 	  </p>
 
-	  <h3>3.1 Early Origins</h3>
+	  <h3 id="early-origins">3.1 Early Origins</h3>
 	  <p>
 	    An early paper from Boyd’s group in 2001 proposed the nuclear norm as a heuristic for reducing the order of controllers and systems. These problems typically involve seeking some low-rank solution to linear matrix inequalities. The observation made in <a href="#fazel2001">[Fazel et al., 2001]</a> is that if the decision matrix is positive semidefinite, then minimizing its trace is a convex proxy for minimizing rank — this is our nuclear norm (which the authors note is also sometimes called the <em>Ky Fan norm</em>). Importantly, they show that the nuclear norm is the tightest convex relaxation: for the set of matrices with operator norm (recall: the dual of the nuclear norm) bounded by 1, the nuclear norm is the <em>convex envelope</em> of the rank function, meaning it is the largest convex function that under-approximates rank on this set.
 	  </p>
 
-	  <h3>3.2 Low-Rank Matrix Completion</h3>
+	  <h3 id="matrix-completion">3.2 Low-Rank Matrix Completion</h3>
 	  <p>
 	    One of the more well-known applications of nuclear norm minimization is the <em>matrix completion</em> problem: one is given only a subset of entries of some (large) matrix and needs to infer the missing entries under the assumption that the complete matrix is low-rank. However, directly enforcing “find the lowest-rank matrix consistent with the known entries” is NP-hard <a href="#recht2010">[Recht et al., 2010]</a>. To make this problem tractable, additional assumptions are required.
 	  </p>
@@ -450,7 +502,7 @@ $$
 	    Those familiar with SDP solvers know that, generally, solving large SDP formulations does not scale well, especially for matrix completion problems where the matrix variables are of size equal to the full matrix. To approximate the matrix with minimum nuclear norm, one can use <em>Singular Value Thresholding</em> <a href="#cai2010">[Cai et al., 2010]</a>, which performs iterative soft-thresholding of singular values and scales better than general-purpose SDP solvers.
 	  </p>
 
-	  <h3>3.3 Robust Principal Component Analysis</h3>
+	  <h3 id="robust-pca">3.3 Robust Principal Component Analysis</h3>
 	  <p>
 	    <em>Robust PCA</em> deals with separating a matrix into low-rank and sparse components. If our data matrix is largely low-rank but has unusual sparse errors or outliers, classical PCA fails because these outliers can shift the low-rank subspace estimation adversarially. Robust PCA aims to recover the <em>true</em> low-rank component despite the outliers.
 	  </p>
@@ -465,7 +517,7 @@ $$
 	  <p>
 	    where \(D\) is the observed data matrix (assumed to be \(L_{\text{true}} + S_{\text{true}}\) with \(L_{\text{true}}\) low-rank and \(S_{\text{true}}\) sparse). The nuclear norm on \(L\) promotes a low-rank solution and the \(L_1\) norm promotes sparsity in \(S\). Under reasonable assumptions, this program exactly recovers both components \(L_{\text{true}}\) and \(S_{\text{true}}\) with high probability. More interestingly, this also implies that among all decompositions \(D = L + S\) the one with minimum nuclear norm plus \(L_1\) norm is the <em>correct</em> one.
 	  </p>
-	  <h2>References</h2>
+	  <h2 id="references">References</h2>
 	  <ul>
 	    <li id="fazel2001">Maryam Fazel, Haitham Hindi, and Stephen Boyd. <a href="https://web.stanford.edu/~boyd/papers/pdf/rank_min_heur.pdf">A rank minimization heuristic with application to minimum order system approximation</a>. <em>Proc. American Control Conference</em>, 2001.</li>
 
@@ -483,8 +535,8 @@ $$
                 <span class="tag">convex optimization</span>
             </div>
             <div class="post-navigation">
-                <a href="previous-post.html">&larr; Previous</a>
-                <a href="next-post.html">Next &rarr;</a>
+                <a href="robinhoodhashing.html">&larr; Previous</a>
+                <a href="robinhoodhashing.html">Next &rarr;</a>
             </div>
         </div>
     </div>

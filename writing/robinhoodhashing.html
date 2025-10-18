@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-site-verification" content="V8HrLbWbjt8cDieQAiaQ76BOBsDdpjpa3GyIiIzyO_4"/>
+    <title>std::unordered_map is slow</title>
+    <link rel="stylesheet" href="../style.css">
+    
+      <!-- MathJax for LaTeX support -->
+    <script>
+      window.MathJax = {
+	  tex: {
+	      packages: {
+		  // add amsmath to the default TeX loader:
+		  '[+]': ['amsmath']
+	      }
+	  }
+      };
+    </script>
+    <script
+      id="MathJax-script"
+      async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <!-- Highlight.js for code syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            document.querySelectorAll('pre code').forEach((el) => {
+                hljs.highlightElement(el);
+            });
+        });
+        
+        // Array of profile images to choose from randomly
+	const profileImages = [
+	    "../profile-images/image2.jpg",
+	    "../profile-images/image3.jpg",
+	    "../profile-images/image4.jpg",
+	    "../profile-images/image5.jpg",
+	    "../profile-images/image6.jpg",
+	    "../profile-images/image7.jpg",
+	    "../profile-images/image8.jpg",
+	    "../profile-images/image9.jpg",
+	    "../profile-images/image10.jpg",
+	    "../profile-images/image11.jpg",
+	    "../profile-images/image12.jpg",
+	    "../profile-images/image13.jpg",
+	    "../profile-images/image14.jpg",
+	    "../profile-images/image15.jpg",
+	    "../profile-images/image16.jpg",
+	    "../profile-images/image17.jpg",
+	    "../profile-images/image18.jpg",
+	    "../profile-images/image19.jpg",
+	    "../profile-images/image20.jpg",
+	    "../profile-images/image21.jpg",
+	    "../profile-images/image22.jpg",
+	    "../profile-images/image23.jpg",
+	    "../profile-images/image24.jpg",
+	    "../profile-images/image25.jpg",
+	    "../profile-images/image26.jpg",
+	    "../profile-images/image27.jpg",
+	    "../profile-images/image28.jpg",
+	    "../profile-images/image29.jpg",
+	    "../profile-images/image30.jpg",
+	    "../profile-images/image31.jpg",
+	    "../profile-images/image32.jpg",
+	    "../profile-images/image33.jpg",
+	    "../profile-images/image34.jpg",
+	    "../profile-images/image35.jpg",
+	    "../profile-images/image36.jpg",
+	    "../profile-images/image37.jpg"
+	];
+
+        
+        // Function to set a random profile image on page load
+        function setRandomProfileImage() {
+            const randomIndex = Math.floor(Math.random() * profileImages.length);
+            const profileImageElement = document.getElementById("profile-image");
+            if (profileImageElement) {
+                profileImageElement.src = profileImages[randomIndex];
+            }
+        }
+        
+        // Set the image when the window loads
+        window.onload = function() {
+            setRandomProfileImage();
+            // Add any other onload functions here if needed
+        };
+    </script>
+    
+    <style>
+        /* Additional styles for blog posts */
+        .post-header {
+            margin-bottom: 2em;
+            border-bottom: 2px solid #a9a9d6;
+            padding-bottom: 1em;
+        }
+        
+        .post-title {
+            font-size: 24px;
+            margin-bottom: 0.25em;
+        }
+        
+        .post-date {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 1em;
+        }
+        
+        .post-content {
+            line-height: 1.6;
+        }
+        
+        .post-content h2 {
+            font-size: 20px;
+            margin-top: 1.5em;
+            margin-bottom: 0.75em;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 0.25em;
+        }
+        
+        .post-content h3 {
+            font-size: 18px;
+            margin-top: 1.25em;
+            margin-bottom: 0.5em;
+        }
+        
+        .post-content p {
+            margin-bottom: 1em;
+        }
+        
+        .post-content ul, .post-content ol {
+            margin-bottom: 1em;
+            padding-left: 2em;
+        }
+        
+        .post-content li {
+            margin-bottom: 0.5em;
+        }
+        
+        .post-content blockquote {
+            border-left: 4px solid  #a9a9d6;
+            padding-left: 1em;
+            color: #555;
+            font-style: italic;
+            margin: 1em 0;
+        }
+        
+        .post-content img {
+            max-width: 100%;
+            display: block;
+            margin: 1em auto;
+        }
+        
+        .post-content figcaption {
+            font-size: 12px;
+            color: #666;
+            text-align: center;
+            margin-top: 0.5em;
+        }
+        
+        .post-content code {
+            font-family: Consolas, Monaco, 'Andale Mono', monospace;
+            background-color: #f5f5f5;
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+        }
+        
+        .post-content pre {
+            background-color: #f5f5f5;
+            padding: 1em;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 1em 0;
+        }
+        
+        .post-content pre code {
+            background-color: transparent;
+            padding: 0;
+        }
+        
+        .post-content .math {
+            overflow-x: auto;
+            margin: 1em 0;
+            padding: 0.5em 0;
+        }
+        
+        .post-content table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 1em 0;
+        }
+        
+        .post-content table, .post-content th, .post-content td {
+            border: 1px solid #ddd;
+        }
+        
+        .post-content th, .post-content td {
+            padding: 0.5em;
+            text-align: left;
+        }
+        
+        .post-content th {
+            background-color: #f5f5f5;
+        }
+        
+        .post-footer {
+            margin-top: 2em;
+            padding-top: 1em;
+            border-top: 2px solid #a9a9d6;
+        }
+        
+        .post-tags {
+            margin-bottom: 1em;
+        }
+        
+        .tag {
+            display: inline-block;
+            background-color: #f0f0f0;
+            padding: 0.25em 0.5em;
+            border-radius: 3px;
+            margin-right: 0.5em;
+            font-size: 12px;
+            color: #555;
+        }
+        
+        .post-navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1em;
+        }
+        
+        .post-navigation a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        
+        .post-navigation a:hover {
+            text-decoration: underline;
+        }
+    </style>
+  </head>
+  <body>
+    <div class="navbar">
+      <img id="profile-image" src="../pfp.jpg" alt="Profile Picture" class="profile-picture">
+      <p class="navhead"><b>Navigation</b></p>
+      <a class="navlink" href="../index.html#home">Home</a>
+      <a class="navlink" href="../index.html#interests">Interests</a>
+      <a class="navlink" href="../index.html#ucla">UCLA</a>
+      <a class="navlink" href="../writing.html">Writing</a>
+      <a class="navlink" href="../index.html#contact">Contact</a>
+      <a class="navlink" href="../index.html#credit">Credit</a>
+      <p class="navhead"><b>Post</b></p>
+      <a class="navlink" href="#two-sum">1. Two sum</a>
+      <a class="navlink" href="#practical-implementation">2. Practical implementation</a>
+      <a class="navlink" href="#references">References</a>
+      <p class="navhead"><b>Quick Links</b></p>
+      <a class="navlink" href="https://github.com/raayandhar" target="_blank">GitHub</a>
+      <a class="navlink" href="https://x.com/raayandhar" target="_blank">Twitter (X)</a>
+      <a class="navlink" href="https://www.linkedin.com/in/raayan-dhar-4909051b1/" target="_blank">LinkedIn</a>
+    </div>
+    <div class="main">
+      <div class="post-header">
+        <h1 class="post-title"><code>std::unordered_map</code> is slow</h1>
+        <p class="post-date">Oct 17, 2025</p>
+      </div>
+        
+      <div class="post-content">
+	<p>
+	  Intro of some sort. Still in progress!
+	</p>
+	<h2 id="two-sum">1. Two sum</h2>
+	<p>
+	  The premise of the <a href="https://leetcode.com/problems/two-sum/description/">Two Sum problem</a> is simple: given an array of integers and some target integer, return the <em>indices</em> of the two numbers such that they add up to the target integer. Additionally, for the purposes of this post, we will make the modification that instead of returning the indices, we simply return whether we <em>can</em> find two integers that add up to the target integer. There are a few approaches to this problem: 
+	  <ol>
+	    <li> We can use two nested <code>for</code> loops: an outer one to select each element, and an inner one to check if any subsequent elements sums to the target integer.</li>
+	    <li> We can sort the array first, then loop over the elements using two pointers: one at the beginning of the list and one at the end, and move inward based on whether the current sum is too small or too large.</li>
+	    <li> We build a hash map of values to indices, then loop through the array checking if the complement (target minus current value) exists in our map.</li>
+	    <li> An improvement over the approach in 3. is to build the hash map while simultaenously checking for complements in a single pass, eliminating the need for our second loop.</li>
+	  </ol>
+      </p>
+	<p>
+	Comparing the approaches to these problems using big-\(O\) analysis, where \(N\) is the length of the array, we find that the first approach is clearly \(O(N^2)\) time since we're checking every pair of elements. The second approach is dominated by \(O(N \log N)\) time for sorting. The third and fourth approaches are taught to be the fastest: \(O(N)\) time (with the third approach slower by a factor of two), with the tradeoff being \(O(N)\) space to store the hash map.
+	</p>
+	<p>
+	  So, if all we cared about was speed, by asymptotic analysis, the hash table dominates. Unfortunately, in the real world, it is not so simple.
+	</p>
+	<h2 id="practical-implementation">2. Practical implementation</h2>
+	<p>
+	  Suppose we were implementing the "algorithmically efficient" solution in C++, using the standard library's <code>std::unordered_map</code>.
+	</p>
+	<!-- <h2> Robin hood hashing </h2>
+	<h2> Disclaimer</h2>
+	<p>
+	  There is far more analysis required to make the conclusion that <code>std::unordered_map</code> is slow, or that we should be using Robin-Hood Hashing instead. I enjoyed reading (1, 2, 3, add references) on this topic which present these topics in a more scientific fashion. Rather, the purpose is to demonstrate that (make a conclusion from the data structures talk...). I was largely inspired by (talk), and figured this particular topic would be fun to dig into further.
+	</p>
+	<p>
+	  <em>"Benchmarks are the only source of truth you will ever get, and they are lies."</em> (Matt Kulukundis)
+	</p>
+	 -->
+	<h2 id="references">References</h2>
+	<p>
+	  <ol>
+	    <!-- 
+	    https://news.ycombinator.com/item?id=22957884 has some discussion on ABI cpp related stuff 
+	    https://stackoverflow.com/questions/42588264/why-is-stdunordered-map-slow-and-can-i-use-it-more-effectively-to-alleviate-t
+	    https://stackoverflow.com/questions/3300525/super-high-performance-c-c-hash-map-table-dictionary
+	    https://www.reddit.com/r/compsci/comments/b7he68/c_unordered_map_implementation/
+	    https://devblogs.microsoft.com/oldnewthing/20230808-00/?p=108572
+	    https://jbseg.medium.com/c-unordered-map-under-the-hood-9540cec4553a
+	    https://stackoverflow.com/questions/31098123/c-unordered-map-collision-handling-resize-and-rehash
+	    https://stackoverflow.com/questions/31112852/how-stdunordered-map-is-implemented
+	    https://www.youtube.com/watch?v=Q4dDoJ4JZ4I
+	    -->
+
+	    <li id="1">P. Celis, P. -A. Larson and J. I. Munro. <a href="https://cs.uwaterloo.ca/research/tr/1986/CS-86-14.pdf">Robin hood hashing</a>. <em>Annual Symposium on Foundations of Computer Science (sfcs 1985)</em>, 1985, pp. 281-288, doi: 10.1109/SFCS.1985.48.</li>
+	    <li id="2"> <a href="https://www.cs.cornell.edu/courses/JavaAndDS/files/hashing_RobinHood.pdf">Robin Hood Hashing</a>, David Gries, 2021</li>
+	    <li id="3"> <a href="https://www.sebastiansylvan.com/post/robin-hood-hashing-should-be-your-default-hash-table-implementation/">Robin Hood Hashing should be your default Hash Table implementation</a>, Sebastian Sylvan, May 8, 2013 (<a href="https://news.ycombinator.com/item?id=12399989">Hacker News post</a>)</li>
+	    <li id="4"> <a href="https://www.sebastiansylvan.com/post/more-on-robin-hood-hashing-2/">More on Robin hood Hashing</a>, Seabstian Sylvan, Aug 5, 2013</li>
+	    <li id="5"> <a href="https://codecapsule.com/2013/11/11/robin-hood-hashing/">Robin Hood hashing</a>, Emmanual Goossaert, Nov 11, 2013</li>
+	    <li id="6"> <a href="https://codecapsule.com/2013/11/17/robin-hood-hashing-backward-shift-deletion/">Robin Hood hashing: backward shift deletion</a>, Emmanuel Goossaert, Nov 17, 2013</li>
+	    <li id="7"> <a href="https://cglab.ca/~abeinges/blah/robinhood-part-1/">Building a HashMap in Rust - Part 1: What's a HashMap?</a>, Alexis Beingessner</li>
+	    <li id="8"> <a href="https://github.com/tmmcguire/rust-toys/blob/master/pony/anagrams/robinhood.pony">tmmcguire/rust-toys/pony/anagrams/robinhood.pony</a>, Tommy M. McGuire</li>
+	    <li id="9"> <a href="https://www.youtube.com/watch?v=fHNmRkzxHWs">CppCon 2014: "Efficiency with Algorithms, Performance with Data Structures"</a>, Chandler Carruth</li>
+	    <li id="10"> <a href="https://www.youtube.com/watch?v=ncHmEUmJZf4">CppCon 2017: "Designing a Fast, Efficient, Cache-friendly Hash Table, Step by Step"</a>, Matt Kulukundis</li>
+	    <li id="11"> <a href="https://www.youtube.com/watch?v=WDIkqP4JbkE&t=866s">code::dive 2014: Cpu Caches and Why You Care</a>, Scott Meyers</li>
+	    <li id="12"> <a href="https://tessil.github.io/2016/08/29/benchmark-hopscotch-map.html#:~:text=For%20speed%20efficiency,ska%3A%3Aflat_hash_map">Benchmark of major hash maps implementations</a>, Thibaut Goetghebuer-Planchon, Oct 5, 2017</li>
+	    <li id="13"> <a href="https://nullprogram.com/blog/2023/06/26/">Solving "Two Sum" in C with a tiny hash table</a>, Chris Wellons, June 26, 2023 (<a href="https://news.ycombinator.com/item?id=36498477">Hacker News post</a>)</li>
+	  </ol>
+	</p>
+      </div>
+      <div class="post-footer">
+        <div class="post-tags">
+          <span class="tag">c++</span>
+	  <span class="tag">architecture</span>
+        </div>
+        <div class="post-navigation">
+          <a href="nuclearnorm.html">&larr; Previous</a>
+          <a href="nuclearnorm.html">Next &rarr;</a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+</body>
+</html>
