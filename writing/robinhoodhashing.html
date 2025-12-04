@@ -271,7 +271,7 @@
         
       <div class="post-content">
 	<p>
-	  Intro of some sort. Still in progress!
+	  Nanobind (link here) is a ... (description). They attribute part of their speed to avoiding <code>std::unordered_map</code> (link here). In general, C++ is a performant language (attribute here, something like OK, this is not always true .. etc etc with a ^1), but the (lack of) performance of <code>std::unordered_map</code> has been discussed at least a few times (e.g. ... link to some examples). To illustrate this, we can start with a much simpler argument.
 	</p>
 	<h2 id="two-sum">1. Two sum</h2>
 	<p>
@@ -280,7 +280,7 @@
 	    <li> We can use two nested <code>for</code> loops: an outer one to select each element, and an inner one to check if any subsequent elements sums to the target integer.</li>
 	    <li> We can sort the array first, then loop over the elements using two pointers: one at the beginning of the list and one at the end, and move inward based on whether the current sum is too small or too large.</li>
 	    <li> We build a hash map of values to indices, then loop through the array checking if the complement (target minus current value) exists in our map.</li>
-	    <li> An improvement over the approach in 3. is to build the hash map while simultaenously checking for complements in a single pass, eliminating the need for our second loop.</li>
+	    <li> An improvement over the approach in 3. is to build the hash map while simultaneously checking for complements in a single pass, eliminating the need for our second loop.</li>
 	  </ol>
       </p>
 	<p>
@@ -293,19 +293,42 @@
 	<p>
 	  Suppose we were implementing the "algorithmically efficient" solution in C++, using the standard library's <code>std::unordered_map</code>.
 	</p>
-	<!-- <h2> Robin hood hashing </h2>
+	<h3 id="inside-a-hashmap">2.1 What's in a hashmap?</code></h3>
+	There are two conventional ways of implementing the ... scheme in a hashmap:
+	<ol>
+	  <li> The first is called separate chaining (link) (or ... other names). When we are (diagram) </li>
+	  <li> The other approach is called open addressing ... (diagram) </li>
+	</ol>
+	<h3 id="inside-unordered_map">2.2 What's in <code>std::unordered_map</code>?</h3>
+	<h3 id="cpp-abi">2.3 The C++ ABI </h3>
+	<h2 id="modern-processor-architecture"> 3. Modern processor architecture </h2>
+	<h3 id="sorting-is-fast"> 3.1 Sorting is fast </h3>
+	<h3 id="bubble-sort-is-fast"> 3.2 Detour: Bubble sort is fast </h3>
+	<h3 id="separate-chaining-is-slow"> 3.3 Separate chaining is slow </h3>
+	<h2> 4. Robin hood hashing </h2>
+	<p>Go over Robin hood hashing slowly and clearly with diagrams </p>
+	<h3> 4.1 Is open addressing fast? </h3>
+	<p>Yes, it's cache friendly (explain how) but there are some pathological cases we need to be careful</p>
+	<h3> 4.2 Insertion </h3>
+	<p> Go over how we insert items </p>
+	<h3> 4.3 Deletion </h3>
+	<p> Go over the different ways of deleting items </p>
+	<h2> 5. The numbers </h2>
+	<p>Get graphs and results here, methodology, etc.</p>
 	<h2> Disclaimer</h2>
 	<p>
 	  There is far more analysis required to make the conclusion that <code>std::unordered_map</code> is slow, or that we should be using Robin-Hood Hashing instead. I enjoyed reading (1, 2, 3, add references) on this topic which present these topics in a more scientific fashion. Rather, the purpose is to demonstrate that (make a conclusion from the data structures talk...). I was largely inspired by (talk), and figured this particular topic would be fun to dig into further.
 	</p>
 	<p>
-	  <em>"Benchmarks are the only source of truth you will ever get, and they are lies."</em> (Matt Kulukundis)
+	  <em>"All models are wrong, but some are useful."</em> - <a href="https://en.wikipedia.org/wiki/All_models_are_wrong">George E.P. Box</a>
 	</p>
-	 -->
+	<h2> Acknowledgement</h2>
+	<p>
+	  None of the ideas presented here are new, and there are many other blog posts discussing these topics, which are linked below (link to the reference section) that I encourage you to check out. This post was largely written for my own learning and understanding. 
+	</p>
 	<h2 id="references">References</h2>
 	<p>
 	  <ol>
-	    <!-- 
 	    https://news.ycombinator.com/item?id=22957884 has some discussion on ABI cpp related stuff 
 	    https://stackoverflow.com/questions/42588264/why-is-stdunordered-map-slow-and-can-i-use-it-more-effectively-to-alleviate-t
 	    https://stackoverflow.com/questions/3300525/super-high-performance-c-c-hash-map-table-dictionary
@@ -315,7 +338,6 @@
 	    https://stackoverflow.com/questions/31098123/c-unordered-map-collision-handling-resize-and-rehash
 	    https://stackoverflow.com/questions/31112852/how-stdunordered-map-is-implemented
 	    https://www.youtube.com/watch?v=Q4dDoJ4JZ4I
-	    -->
 
 	    <li id="1">P. Celis, P. -A. Larson and J. I. Munro. <a href="https://cs.uwaterloo.ca/research/tr/1986/CS-86-14.pdf">Robin hood hashing</a>. <em>Annual Symposium on Foundations of Computer Science (sfcs 1985)</em>, 1985, pp. 281-288, doi: 10.1109/SFCS.1985.48.</li>
 	    <li id="2"> <a href="https://www.cs.cornell.edu/courses/JavaAndDS/files/hashing_RobinHood.pdf">Robin Hood Hashing</a>, David Gries, 2021</li>
