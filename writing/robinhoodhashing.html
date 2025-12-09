@@ -291,15 +291,24 @@
 	</p>
 	<h2 id="practical-implementation">2. Practical implementation</h2>
 	<p>
-	  Suppose we were implementing the "algorithmically efficient" solution in C++, using the standard library's <code>std::unordered_map</code>.
+	  Suppose we were implementing the "algorithmically efficient" solution in C++, using the standard library's <code>std::unordered_map</code>. It might look something like this: (code). (setup for our benchmark). Running our solution on this setup gives us the following (avg time + variance).
 	</p>
 	<h3 id="inside-a-hashmap">2.1 What's in a hashmap?</code></h3>
-	There are two conventional ways of implementing the ... scheme in a hashmap:
+	There are two conventional strategies for implementing a hash table:
 	<ol>
-	  <li> The first is called separate chaining (link) (or ... other names). When we are (diagram) </li>
-	  <li> The other approach is called open addressing ... (diagram) </li>
+	  <li> The first is called <strong>separate chaining</strong> (link) (or ... other names). Each slot in an array of buckets contains a pointer (or list) to elements whose keys hash to that bucket. When we run into an insertion that collides with an already-inserted element, the elements are kept in a linked list (or similar - there are more sophisticated solutions, e.g. a binary tree) associated with that bucket. (diagram) </li>
+	  <li> The other approach is called <strong>open addressing</strong>. All elements are stored directly in an array. If a key's hashed slot is occupied, the algorithm "probes" (searches) for another empty slot, of which there are various strategies to determine the interval between probes (e.g. linear, quadratic, etc.). Once an empty slot is found, the element is placed there. The lookups follow the same probe sequence to find a key (or determine it's not present). (diagram) </li>
 	</ol>
 	<h3 id="inside-unordered_map">2.2 What's in <code>std::unordered_map</code>?</h3>
+	<p>
+	  The C++ standard's <code>std::unordered_map</code> is implemented with the separate chaining scheme, using singly-linked lists for collisions (cite). Each element is allocated as a node containing the key-value pair and pointers for the chain.
+	</p>
+	<p>
+	  Buckets are an array of pointers to these nodes. When we insert, we compute the hash for the key, then pick our bucket index. If there's already an element in that bucket, we allocate a new node and link it to the end of the list. (diagram)
+	</p>
+	<p>
+	  Unfortunately, this design is not very efficient. Every insertion requires an allocation (to create a node), and possibly a pointer update. Lookup requires potentially chasing through multiple pointers in memory. Since we have pointers, the elements are scattered and have poor spatial locality in memory. 
+	</p>
 	<h3 id="cpp-abi">2.3 The C++ ABI </h3>
 	<h2 id="modern-processor-architecture"> 3. Modern processor architecture </h2>
 	<h3 id="sorting-is-fast"> 3.1 Sorting is fast </h3>
@@ -309,9 +318,11 @@
 	<p>Go over Robin hood hashing slowly and clearly with diagrams </p>
 	<h3> 4.1 Is open addressing fast? </h3>
 	<p>Yes, it's cache friendly (explain how) but there are some pathological cases we need to be careful</p>
-	<h3> 4.2 Insertion </h3>
+	<h3> 4.2 Lookup </h3>
+	<p> Go over how look up works </p>
+	<h3> 4.3 Insertion </h3>
 	<p> Go over how we insert items </p>
-	<h3> 4.3 Deletion </h3>
+	<h3> 4.4 Deletion </h3>
 	<p> Go over the different ways of deleting items </p>
 	<h2> 5. The numbers </h2>
 	<p>Get graphs and results here, methodology, etc.</p>
